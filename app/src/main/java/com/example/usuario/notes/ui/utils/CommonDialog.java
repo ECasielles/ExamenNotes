@@ -27,7 +27,7 @@ public class CommonDialog {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
-                        presenter.onDeleteNote((Note) bundle.getParcelable(Note.TAG));
+                        presenter.deleteNote((Note) bundle.getParcelable(Note.TAG));
                     }
                 }).
                 setNegativeButton(context.getResources().getString(R.string.menu_context_ok), new DialogInterface.OnClickListener() {

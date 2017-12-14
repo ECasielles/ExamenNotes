@@ -24,7 +24,7 @@ import java.util.Comparator;
 public class NoteAdapter extends ArrayAdapter<Note> {
 
     public NoteAdapter(@NonNull Context context) {
-        super(context, R.layout.item_note, NoteRepository.getInstance());
+        super(context, R.layout.item_note, new ArrayList<Note>());
     }
 
     @NonNull
@@ -35,7 +35,7 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
         if(rootView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            rootView = inflater.inflate(R.layout.item_note, parent);
+            rootView = inflater.inflate(R.layout.item_note, null);
             holder = new NoteHolder();
 
             holder.txvTitle = rootView.findViewById(R.id.txvTitle);

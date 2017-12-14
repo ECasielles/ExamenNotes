@@ -26,6 +26,8 @@ import com.example.usuario.notes.data.db.repository.NoteRepository;
 import com.example.usuario.notes.ui.notes.contract.ListNoteFragmentContract;
 import com.example.usuario.notes.ui.utils.CommonDialog;
 
+import java.util.List;
+
 /**
  * Fragment que muestra la lista de notas
  * @author Enrique Casielles
@@ -38,7 +40,7 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
     NoteAdapter adapter;
     ListNoteFragmentContract.Presenter presenter;
     OnAddNoteListener callback;
-    private ViewGroup parent;
+    ViewGroup parent;
 
     //INTERFAZ COMUNICACION CON ACTIVITY
     public interface OnAddNoteListener {
@@ -73,7 +75,7 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
         View rootView = inflater.inflate(R.layout.fragment_list_note, container, false);
         toolbar = rootView.findViewById(R.id.tlbList);
         floatingActionButton = rootView.findViewById(R.id.fabList);
-        adapter = new NoteAdapter(getActivity());
+        adapter = new NoteAdapter(getContext());
         parent = (ViewGroup) rootView;
         return rootView;
     }
@@ -81,7 +83,7 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         registerForContextMenu(view);
-        getListView().setAdapter(adapter);
+        setListAdapter(adapter);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +99,7 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
                 Parcelable parcel = (Parcelable) adapterView.getItemAtPosition(i);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Note.TAG, parcel);
+                callback.addNewNote(bundle);
                 return false;
             }
         });
@@ -145,11 +148,6 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
         return super.onContextItemSelected(item);
     }
 
-    @Override
-    public void showOnDeleteMessage() {
-        Snackbar.make(parent, getResources().getString(R.string.note_deleted), Snackbar.LENGTH_SHORT);
-    }
-
     //GUARDAR EL ESTADO
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -165,11 +163,14 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
     public void setPresenter(ListNoteFragmentContract.Presenter presenter) {
         this.presenter = presenter;
     }
-
     @Override
-    public void onListLoaded() {
+    public void onListLoaded(List<Note> notes) {
         adapter.clear();
-        adapter = new NoteAdapter(getContext());
+        adapter.addAll(notes);
+    }
+    @Override
+    public void showOnDeleteMessage(String title) {
+        Snackbar.make(parent, getResources().getString(R.string.note_deleted) + ": " + title, Snackbar.LENGTH_SHORT);
     }
 
     //CICLO DE VIDA
@@ -179,4 +180,5 @@ public class ListNoteFragment extends ListFragment implements ListNoteFragmentCo
         adapter = null;
         presenter.onDestroy();
     }
+
 }

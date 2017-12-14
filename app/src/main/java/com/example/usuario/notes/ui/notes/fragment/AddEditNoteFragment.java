@@ -32,7 +32,6 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
     private FloatingActionButton floatingActionButton;
     private ViewGroup parent;
 
-
     //INTERFAZ COMUNICACION CON ACTIVITY
     public interface OnAddEditFinishedListener {
         void loadList();
@@ -45,6 +44,7 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
         return addEditNoteFragment;
     }
 
+    //INICIO
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -54,7 +54,6 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
             throw new ClassCastException(activity + " must implement OnAddEditFinishedListener");
         }
     }
-    //CICLO DE VIDA
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +66,6 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
         parent = (ViewGroup) rootView;
         return rootView;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -87,7 +85,6 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
     public void setPresenter(AddEditNoteContract.Presenter presenter) {
         this.presenter = presenter;
     }
-
     @Override
     public void setTitleEmptyError() {
         Snackbar.make(parent, getResources().getString(R.string.error_title_empty), Snackbar.LENGTH_SHORT);
@@ -96,15 +93,16 @@ public class AddEditNoteFragment extends Fragment implements AddEditNoteContract
     public void setAlreadyExistsError() {
         Snackbar.make(parent, getResources().getString(R.string.error_title_exists), Snackbar.LENGTH_SHORT);
     }
-
     @Override
     public void onSuccess() {
         callback.loadList();
     }
 
+    //CICLO DE VIDA
     @Override
     public void onDestroy() {
         super.onDestroy();
         presenter.onDestroy();
     }
+
 }
