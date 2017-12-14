@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="menu_action_delete_item">Borrar nota</string>
+    <string name="menu_action_sort_by_id">Ordenar por ID</string>
+    <string name="menu_action_sort_by_title">Ordenar por Título</string>
+    <string name="menu_action_show_hide_inactive">Mostrar/Ocultar notas inactivas</string>
+    <string name="menu_context_delete_item_title">Borrar nota</string>
+    <string name="menu_context_delete_item_content">¿Desea borrar la nota seleccionada?</string>
+    <string name="menu_context_ok">Ok</string>
+    <string name="error_title_exists">Esa nota ya existe</string>
+    <string name="swtActive">Activa</string>
+    <string name="edtTitle">Título</string>
+    <string name="edtDescription">Escribe aquí la descripción.</string>
+    <string name="note_deleted">Nota eliminada</string>
+</resources>
